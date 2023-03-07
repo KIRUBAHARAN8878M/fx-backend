@@ -19,21 +19,21 @@ app.use(
   })
 );
 
-// let authenticate = (req, res, next) => {
-//   console.log(req.headers);
-//   if (req.headers.authorization) {
-//     try {
-//       let decode = jwt.verify(req.headers.authorization, process.env.SECRET);
-//       if (decode) {
-//         next();
-//       }
-//     } catch (error) {
-//       res.status(401).json({ message: "Unauthorized" });
-//     }
-//   } else {
-//     res.status(401).json({ message: "Unauthorized" });
-//   }
-// };
+let authenticate = (req, res, next) => {
+  console.log(req.headers);
+  if (req.headers.authorization) {
+    try {
+      let decode = jwt.verify(req.headers.authorization, process.env.SECRET);
+      if (decode) {
+        next();
+      }
+    } catch (error) {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+};
 app.get("/",async function(req,res){
 res.send("<h1>Welcome....</h1>")
 console.log("welcome")
@@ -52,7 +52,7 @@ app.post("/data",  async  (req, res) => {
   }
 });
 
-app.get("/data",  async function (req, res) {
+app.get("/data",authenticate,  async function (req, res) {
   try {
     const connection = await mongoClient.connect(URL);
     const db = connection.db(DB);
