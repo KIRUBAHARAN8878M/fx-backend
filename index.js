@@ -90,7 +90,7 @@ app.post("/login", async function (req, res) {
 
     let user = await db
       .collection("register")
-      .findOne({ email: req.body.email });
+      .findOne({ name: req.body.name });
     if (user) {
       let compare = await bcrypt.compare(req.body.password, user.password);
 
