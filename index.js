@@ -96,7 +96,7 @@ app.post("/login", async function (req, res) {
 
       if (compare) {
         let token = jwt.sign({ _id: user._id }, process.env.SECRET, {
-          expiresIn: "1m",
+          expiresIn: "24h",
         });
         res.json({ token,user });
       } else {
