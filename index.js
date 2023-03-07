@@ -15,7 +15,7 @@ const DB = process.env.DB;
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://frontend-deploy.netlify.app",
   })
 );
 
